@@ -23,11 +23,12 @@ function ListaPage() {
 
  const [ banhos, setBanhos] = useState([]);
 
-     function loadData(){
-
-         //banhos.push({id: 1, nomedog: 'A', peso: 10});
-        setBanhos([{id: 1, nomedog: 'A', peso: 10}]);
-    }
+    async function loadData(){
+        const response = await api.get('/');
+        const banhos = response.data;
+        setBanhos(banhos);
+    
+}
      useEffect(loadData, []);
      
     return <div>
