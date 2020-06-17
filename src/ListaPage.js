@@ -3,6 +3,7 @@ import Header from './Header';
 import api from './api';
 import {interval} from 'rxjs';
 import {Table, TableRow, TableCell, Checkbox, Button} from '@material-ui/core/';
+import DeleteIcon  from '@material-ui/core/Delete';
 
 function ListaPage() {
 
