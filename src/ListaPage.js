@@ -1,52 +1,43 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import Header from './Header';
 import api from './api';
-
-/*
-const banhos = [{
-      id: 1,
-      nomedog: "Amora",
-      peso: 14,
-      valor: "R$ 20.00",
-      status: "aguardando"
-    },
-    {
-      id: 2,
-      nomedog: "Max",
-      peso: 10,
-      valor: "R$ 20.00",
-      status: "ok"
-    },
-]*/
+import {interval} from 'rxjs';
+import {Table, TableRow, TableCell, Checkbox, Button} from '@material-ui/core/';
 
 function ListaPage() {
 
- const [ banhos, setBanhos] = useState([]);
+ const [banho, setBanho] = useState([]);
+ const [loading, setLoading] = useState(true);
 
     async function loadData(){
         const response = await api.get('/');
-        const banhos = response.data;
-        setBanhos(banhos);
-    
+        setBanho(response.data);
+        setLoading(false);
 }
-     useEffect(loadData, []);
+
+useMemo(loadData, []);
      
-    return <div>
+    return <>
         <Header/>
-        <table> 
+        <Table style={{marginTop: '80ox'}}> 
             {
-               banhos.map(banhos => (
-                <tr>
-                    <td> {banhos.id} </td>
-                    <td> {banhos.nomedog} </td>
-                    <td> {banhos.peso} </td>
-                    <td> {banhos.valor} </td>
-                    <td> {banhos.status} </td>
-                </tr>           
+               banho.map(banho => (
+                <TableRow>
+                    <TableCell> {banho.id} </TableCell>
+                    <TableCell> {banho.nomedog} </TableCell>
+                    <TableCell> {banho.peso} </TableCell>
+                    <TableCell> {banho.valor} </TableCell>
+                    <TableCell> {banho.status} </TableCell>
+                    <TableCell>
+                        <Checkbox checked={banho.ok} color="primary"/>
+                     <Button variant="contained" color="secondary" size="small"> Apagar </Button>
+                     </TableCell>
+                </TableRow>           
                 ))
             }
-        </table>
-    </div>
+        </Table>
+       }
+    </>
 }
 
 export default ListaPage;
