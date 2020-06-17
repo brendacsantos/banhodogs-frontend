@@ -77,8 +77,8 @@ useEffect(loadData, []);
     async function salvarUpdate() { 
 
 
-        await api.put(`/${id}`, {nomedog, peso, valor, status});
-          
+        await api.put(`/`, {id, nomedog, peso, valor, status});
+        
         loadData();
         closeDialogUpdate();
 
